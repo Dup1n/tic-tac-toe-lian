@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <title>Tic Tac Toe-lian</title>
+  <head>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body spellcheck="false">
+    <h1 id="title">Tic Tac Toe-lian</h1>
+    <div id="game-body"></div>
+
+    <div class="center">
+    <div id="playerinfo">
+        <h2>Player 1</h2>
+        <input class="inputplayer" type="text" placeholder="Player name 1 😇" />
+        <h2>Player 2</h2>
+        <input class="inputplayer" type="text" placeholder="Player name 2 😈" />    
+        <p style="visibility: hidden" id="input-warning">The Players can't have the same names</p>
+        <button id="playerbtn" onclick="setPlayerName()">Send</button>
+        <p id="playerturn"></p>
+        <h3 id="nameScore" style="visibility: hidden">Scores</h3> 
+        <div id="scores"></div>
+    </div>
+    </div>
+
+    <div id="game-modal">
+    <div id="game-card">
+        <p>End Game</p>
+        <p id="card-message"></p>
+        <a id="resetbtn" href="file:///C:/Users/elian/Desktop/tic-tac-toe/index.html">Reset</a>
+        <button id="resetbtn" onclick="newPlay()">Play Again</button>
+    </div>
+    </div>
+
+    <script src="core.js"></script>
+  </body>
+</html>

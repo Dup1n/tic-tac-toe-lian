@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+:root {
+  --table: #2b2d42;
+  --buttons: #8d99ae;
+  --words: #edf2f4;
+  --border: #ef233c;
+  --background: #d90429;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--words);
+  font-family: "Roboto Mono", sans-serif;
+}
+
+button {
+  border: 1px solid var(--btnshad);
+}
+
+a {
+    display: inline-block;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    padding-top: 21px;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#playerbtn {
+  border-radius: 10px;
+  padding: 10px 40px;
+}
+
+button:hover {
+  background-color: #b7b7b7;
+  cursor: pointer;
+}
+
+#title {
+  text-align: center;
+  color: var(--words);
+}
+
+#game-body {
+  margin: 0 auto;
+  width: 20em;
+  display: none;
+  text-align: center;
+}
+
+.game-button {
+  width: 2.5em;
+  height: 2.5em;
+  font-size: 40px;
+  transition: all 200ms;
+  box-sizing: border-box;
+}
+
+.game-button:hover {
+  background-color: #aaa;
+  border: 5px solid #777;
+}
+
+.center {
+  margin: 0 auto;
+  text-align: center;
+}
+
+#game-modal {
+  position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-card {
+  width: 500px;
+  height: 30%;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  top: 3em;
+  background-color: #fff;
+  color: #000;
+}
+
+#resetbtn {
+  margin: 0 auto;
+  border: 1px solid #000000;
+  background-color: #3a7041;
+  border-radius: 0;
+  border: 1px solid #fff;
+  width: 100px;
+  height: 60px;
+  transition: all 400ms;
+  color: #fff;
+}
+
+#resetbtn:hover {
+  background-color: #0aa521;
+}
+
+#playerinfo {
+  margin-top: 10px;
+}
+
+input {
+  border-radius: 5px;
+  width: 350px;
+  height: 30px;
+  padding: 5px;
+}
+
+#playerturn {
+  font-size: 20px;  
+  display: none;
+}
+
+#scores{
+    position: relative;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;  
+}
+
+.score {
+    padding: 0px 40px;
+    margin: 0px;
+}
+
+.winner {
+  background-color: #ffee00;
+}
+
+.animate {
+  animation: 500ms fade 1;
+}
+
+.animate-btn {
+  animation: 1s blacktow 1;
+}
