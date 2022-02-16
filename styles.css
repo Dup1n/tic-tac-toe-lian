@@ -50,16 +50,12 @@ button:hover {
 }
 
 .game-button {
-  width: 2.5em;
-  height: 2.5em;
-  font-size: 40px;
   transition: all 200ms;
   box-sizing: border-box;
 }
 
 .game-button:hover {
   background-color: #aaa;
-  border: 5px solid #777;
 }
 
 .center {

@@ -1,24 +1,68 @@
-const WINNER = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 const BOARD = document.getElementById("game-body");
 const SYMBOLS = ["😇", "😈"];
-const TIMEOUT = 400;
 const TIMEOUT_GEN = 120;
 let players = [{name: '', score: 0}, {name: '', score: 0}];
+let winner = [];
+let winnerI = [];
 let canPlay = false;
 let playerTurn = 0;
+let numberBox = 3;
+let boardBoxes = 9;
 
 function generateBoard() {
   BOARD.style.display = "block";
   BOARD.innerHTML = "";
-  for (let count = 0; count <= 8; count++) {
+  for (let count = 0; count < boardBoxes; count++) {
     BOARD.innerHTML += `<button onclick="putSymbol(this)" class="game-button">☐</button>`;
   } 
+  resizeBoxes();
   document.getElementById("nameScore").style.visibility = "visible"; 
   const SCORES = document.getElementById('scores');
   SCORES.innerHTML = "";
   SCORES.innerHTML += `<p class="score">${players[0].name}: ${players[0].score}</p>`;
   SCORES.innerHTML += `<p class="score">${players[1].name}: ${players[1].score}</p>`;
   canPlay = true;
+}
+
+function setPositionsWinner(){
+  for (let i = 0; i < boardBoxes; i += numberBox) {
+    winnerI = [];
+    for (let j = 0; j < numberBox; j++) {
+      winnerI.push(i + j);
+    }
+    winner.push(winnerI);
+  }
+
+  for (let i = 0; i < numberBox; i++) {
+    winnerI = [];
+    for (let j = 0; j < numberBox; j++) {
+      winnerI.push(i + (numberBox * j));
+    }
+    winner.push(winnerI);
+  }
+
+  winnerI = [];
+  for (let i = 0; i < boardBoxes; i = i + (numberBox + 1)) {
+    winnerI.push(i);
+  }
+  winner.push(winnerI);
+
+  winnerI = [];
+  for (let i = (numberBox - 1); i < (boardBoxes - 1); i = i + (numberBox - 1)) {
+    winnerI.push(i);
+  }
+  winner.push(winnerI);
+}
+
+function resizeBoxes(){
+  const gameButtons = document.getElementsByClassName("game-button");
+  const sizeBox = numberBox >= 5 ? 5 * (7 + (9 - numberBox)) : 5 * (13 + ((4 - numberBox) * 5));
+  const fontSizeBox = numberBox >= 5 ? 20 : 40;
+  for (let index = 0; index < gameButtons.length; index++) {
+    gameButtons[index].style.width = `${sizeBox}px`;
+    gameButtons[index].style.height = `${sizeBox}px`;
+    gameButtons[index].style.fontSize = `${fontSizeBox}px`;
+  }
 }
 
 function putSymbol(symbolArgs) {
@@ -39,21 +83,27 @@ function changePlayer() {
   }
 }
 
+
+function isWinner(winnerChoose, BUTTONS) {
+  return winnerChoose.reduce((previousWinner, currentWinner) => {
+    return previousWinner && BUTTONS[currentWinner].classList.contains(`${playerTurn}`);
+  }, true);
+}
+
+function winnerMarkButton(winnerChoose, BUTTONS){
+  winnerChoose.forEach(currentWinner => {
+    BUTTONS[currentWinner].classList.add("winner");
+  })
+}
+
 function checkWinner() {
   const BUTTONS = document.querySelectorAll(".game-button");
-  WINNER.forEach(function(winner) {
-    if (
-      BUTTONS[winner[0]].classList.contains(`${playerTurn}`) &&
-      BUTTONS[winner[1]].classList.contains(`${playerTurn}`) &&
-      BUTTONS[winner[2]].classList.contains(`${playerTurn}`)
-    ) {
+  winner.forEach(function(winnerChoose) {
+    if (isWinner(winnerChoose, BUTTONS)) {
+      console.log(playerTurn);
       canPlay = false;
-      setTimeout(() => {
-        endGame(0);
-      }, TIMEOUT);
-      BUTTONS[winner[0]].classList.add("winner");
-      BUTTONS[winner[1]].classList.add("winner");
-      BUTTONS[winner[2]].classList.add("winner");
+      endGame(0);
+      winnerMarkButton(winnerChoose, BUTTONS);
       return true;
     }
   })
@@ -67,10 +117,8 @@ function checkDraw(buttonsArg) {
     if (buttonArg.classList.contains("marked")) marked++;
   });
 
-  if (marked >= 9) {
-    setTimeout(() => {
-      endGame(1);
-    }, TIMEOUT);
+  if (marked >= boardBoxes) {
+    endGame(1);
   }
 }
 
@@ -105,6 +153,11 @@ function setPlayerName() {
         warning.style.visibility = "hidden";
       }, TIMEOUT_1);
     }
+
+    if (inputs[2].value != ""){
+      numberBox = parseInt(inputs[2].value);
+      boardBoxes = numberBox * numberBox;
+    }
   
     if (players[0].name != "" && players[1].name != "") {
       inputs.forEach((inp) => {
@@ -114,7 +167,8 @@ function setPlayerName() {
         name.style.display = "none";
       })
       document.getElementById("playerbtn").style.display = "none";
-  
+
+      setPositionsWinner();
       generateBoard();
     
       document.getElementById("playerturn").style.display = "block";
